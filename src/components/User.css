@@ -1,0 +1,25 @@
+
+.item {
+  background-color: cornsilk;
+  margin: 4px;
+  padding: 4px;
+}
+
+.header {
+  display:flex;
+  flex-direction: row;;
+  
+}
+
+
+.userDetails {
+  background-color: lightcyan;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+ 
+.drawer {
+  display: flex;
+  flex-direction: column;
+}

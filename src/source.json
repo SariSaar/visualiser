@@ -1,0 +1,7 @@
+[{
+    "authorId": "UUID",
+    "userProfile": {
+      "name": "Test",
+      "phone": "123321"
+    }
+}]

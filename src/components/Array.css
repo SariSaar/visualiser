@@ -1,0 +1,16 @@
+.arrayContainer {
+  margin: 2px;
+  background-color: lightgray;
+
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.data {
+  padding: 5px;
+  margin: 5px;
+}
