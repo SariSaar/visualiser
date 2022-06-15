@@ -20,6 +20,22 @@ const User = (props) => {
     setOpen(!open);
   }
 
+  const listingsViewer = (listings) => {
+    return listings.length > 0 ? (
+      listings.map(listing => (
+        <Listing listing={listing} key={listing.id} /> 
+      ))
+    ) : (<p>No listings</p>)
+  }
+
+  const transactionsViewer = (transactions) => {
+    return transactions.length > 0 ? (
+      transactions.map(tx => (
+        <Transaction transaction={tx} key={tx.id} />
+      ))
+    ) : (<p>No transactions</p>)
+  }
+
   return (
     <div className="item">
       <button onClick={toggleOpen}>Toggle user data</button>
@@ -32,17 +48,11 @@ const User = (props) => {
           <h2>User details</h2>
           <UserDetails user={user} />
           <h2>Listings</h2>
-          {listings.map(listing => (
-            <Listing listing={listing} key={listing.id} /> 
-          ))}
+          {listingsViewer(listings)}
           <h2>Customer transactions</h2>
-          {customerTransactions.map(tx => (
-            <Transaction transaction={tx} key={tx.id} />
-          ))}
+          {transactionsViewer(customerTransactions)}
           <h2>Provider transactions</h2>
-          {providerTransactions.map(tx => (
-            <Transaction transaction={tx} key={tx.id} />
-          ))}
+          {transactionsViewer(providerTransactions)}
 
       </div>
       )}
