@@ -4,7 +4,6 @@ import KeyMapper from "./KeyMapper";
 
 const Transaction = (props) => {
   const { transaction } = props;
-  console.log({ transaction }, { props })
 
   return (
     <div className="arrayContainer">

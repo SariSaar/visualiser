@@ -1,6 +1,5 @@
 
 const existingItem = (array, relatedId, attributeFn = null) => {
-  // console.log({ array }, { relatedId })
   if (!attributeFn) {
     attributeFn = (item) => item.id;
   }
@@ -15,7 +14,6 @@ function structureTransactions(users, bookings, reviews, item) {
   const listing = existingItem(provider?.listings || [], item.attributes.listingId);
   const booking = existingItem(bookings, item.id, attributeFn);
   const relevantReviews = reviews.filter(r => r.attributes.transactionId === item.id);
-  console.log({ relevantReviews })
   const customerReview = relevantReviews.filter(r => r.attributes.type === 'ofCustomer')[0];
   const providerReview = relevantReviews.filter(r => r.attributes.type === 'ofProvider')[0];
 
@@ -44,14 +42,11 @@ function structureTransactions(users, bookings, reviews, item) {
 }
 
 export const structureData = (data) => {
-  console.log(data);
-
   const bookings = [];
   const reviews = [];
   const transactions = [];
 
   const users = data.reduce((users, item) => {
-    console.log(item.type)
     if (item.type === 'user') {
       const enhancedItem = {
         ...item,
@@ -65,7 +60,6 @@ export const structureData = (data) => {
       }
       users.push(enhancedItem)
     } else if (item.type === 'listing') {
-      console.log({ listing: item }, item.attributes.title)
       const user = existingItem(users, item.attributes.author)
 
       const enhancedItem = {
@@ -78,16 +72,13 @@ export const structureData = (data) => {
 
       user.listings.push(enhancedItem);
     } else if (item.type === 'transaction') {
-      transactions.push(item);
-      // console.log({ customer }, { provider })
-      
+      transactions.push(item);      
     } else if (item.type === 'booking') {
       bookings.push(item)
     } else if (item.type === 'review') {
       reviews.push(item)
     }
 
-    // console.log({ ...users})
     return users;
   }, []);
 

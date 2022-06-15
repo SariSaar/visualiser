@@ -1,6 +1,6 @@
 
 .item {
-  background-color: cornsilk;
+  background-color: rgb(255, 238, 220);
   margin: 4px;
   padding: 4px;
 }
@@ -11,9 +11,8 @@
   
 }
 
-
 .userDetails {
-  background-color: lightcyan;
+  background-color: rgb(254, 223, 191);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

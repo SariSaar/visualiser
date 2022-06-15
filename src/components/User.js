@@ -4,12 +4,6 @@ import UserDetails from "./UserDetails";
 import Listing from "./Listing";
 import Transaction from "./Transaction";
 
-/**
- * - Show user info
- *
- */
-
-
 const User = (props) => {
   const {
     attributes,
@@ -17,8 +11,6 @@ const User = (props) => {
     customerTransactions,
     providerTransactions,
   } = props.user;
-
-  // console.log({ customerTransactions: customerTransactions.length }, { customerTransactions })
 
   const user = props.user;
 
@@ -45,11 +37,11 @@ const User = (props) => {
           ))}
           <h2>Customer transactions</h2>
           {customerTransactions.map(tx => (
-            <Transaction transaction={tx} />
+            <Transaction transaction={tx} key={tx.id} />
           ))}
           <h2>Provider transactions</h2>
           {providerTransactions.map(tx => (
-            <Transaction transaction={tx} />
+            <Transaction transaction={tx} key={tx.id} />
           ))}
 
       </div>
