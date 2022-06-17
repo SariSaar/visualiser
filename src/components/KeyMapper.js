@@ -3,7 +3,6 @@ import '../components/Array.css';
 
 const KeyMapper = (props) => {
   const { item, attr } = props;
-  // console.log({ props })
 
   return (
     <div>
@@ -11,7 +10,7 @@ const KeyMapper = (props) => {
     (
       <div className="data">
         <p>{attr}</p> <p>{item[attr]}</p>
-        </div>
+      </div>
     ) : null}
   </div>
   )
