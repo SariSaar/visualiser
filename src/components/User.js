@@ -7,7 +7,6 @@ import Image from "./Image";
 
 const User = (props) => {
   const {
-    attributes,
     listings,
     customerTransactions,
     providerTransactions,

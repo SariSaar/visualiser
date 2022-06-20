@@ -13,7 +13,7 @@ const Image = (props) => {
 
   return (
     <div className="imageContainer">
-      <img src={src} height={height} width={width} />
+      <img src={src} height={height} width={width} alt="Image" />
     </div>
   )
 }

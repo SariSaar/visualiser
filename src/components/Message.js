@@ -8,7 +8,7 @@ const Message = (props) => {
     customerName
   } = props;
 
-  const authorName = message.providerId == providerId ? `${providerName} (provider)` : `${customerName} (customer)`;
+  const authorName = message.providerId === providerId ? `${providerName} (provider)` : `${customerName} (customer)`;
 
   return (
     <div className="itemDetails">
