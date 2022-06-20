@@ -3,6 +3,7 @@ import '../components/User.css';
 import UserDetails from "./UserDetails";
 import Listing from "./Listing";
 import Transaction from "./Transaction";
+import Image from "./Image";
 
 const User = (props) => {
   const {
@@ -13,6 +14,7 @@ const User = (props) => {
   } = props.user;
 
   const user = props.user;
+  const images = props.images;
 
   const [ open, setOpen ] = useState(false);
 
@@ -20,10 +22,12 @@ const User = (props) => {
     setOpen(!open);
   }
 
+  const avatarImage = images.filter(img => img.name === user.profile.avatar)[0];
+
   const listingsViewer = (listings) => {
     return listings.length > 0 ? (
       listings.map(listing => (
-        <Listing listing={listing} key={listing.id} /> 
+        <Listing listing={listing} key={listing.id} images={images} /> 
       ))
     ) : (<p>No listings</p>)
   }
@@ -46,6 +50,7 @@ const User = (props) => {
       {open && (
         <div className="drawer">
           <h2>User details</h2>
+          <Image image={avatarImage}/>
           <UserDetails user={user} />
           <h2>Listings</h2>
           {listingsViewer(listings)}

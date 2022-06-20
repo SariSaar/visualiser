@@ -1,4 +1,3 @@
-import KeyMapper from "./KeyMapper";
 import '../components/Array.css';
 
 const Message = (props) => {
