@@ -1,0 +1,15 @@
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid orange;
+}
+
+th, td {
+  padding: 5px;
+  border: 1px solid orange;
+}
+
+.modifySelect {
+  padding: 2px;
+}
