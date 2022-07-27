@@ -4,23 +4,31 @@ import '../components/CsvTable.css';
 import ModifySelect from './ModifySelect';
 import { sortByAttribute, filterByAttribute } from '../util/sort';
 
-const extDataKeys = ['PublicData', 'ProtectedData', 'PrivateData']
+const extDataKeys = ['PublicData', 'ProtectedData', 'PrivateData', 'Metadata']
 
 const getExtendedDataAttributes = (dataKey, content) => {
+  if (!content[0][dataKey]) {
+    return {
+      keys: [],
+      data: {}
+    }
+  }
+
   const attr = content.reduce((acc, val) => {
-    const data = JSON.parse(val[dataKey]);
+    const extDataObject = val[dataKey];
+    const data = JSON.parse(extDataObject);
     const keys = data ? Object.keys(data) : [];
     const accKeys = acc.keys ?? [];
     return {
       keys: [...accKeys, ...keys],
       data: {
-        ...acc.data,
+        ...acc.data ?? {},
         ...(data && {[val.Id]: data}),
       }
     };
   }, {})
 
-  const uniqueAttrKeys = attr.keys.filter((a, idx, self) => self.indexOf(a) === idx);
+  const uniqueAttrKeys = attr.keys ? attr.keys.filter((a, idx, self) => self.indexOf(a) === idx) : [];
 
   return {
     ...attr,
@@ -69,9 +77,9 @@ const CsvTable = (props) => {
   }, [])
 
   const data = content.map(c => {
-    const pub = extAttributes.PublicData.data[c.Id];
-    const prot = extAttributes.ProtectedData.data[c.Id];
-    const priv = extAttributes.PrivateData.data[c.Id];
+    const pub = extAttributes.PublicData?.data[c.Id];
+    const prot = extAttributes.ProtectedData?.data[c.Id];
+    const priv = extAttributes.PrivateData?.data[c.Id];
     return {
       ...c,
       ...(pub && {...pub}),
@@ -100,6 +108,7 @@ const CsvTable = (props) => {
 
   return (
     <div>
+      Rows: {sortFilterData.length}
       <ModifySelect options={cols} mode='Sort' onSelect={sortTable} />
       <ModifySelect options={cols} mode='Filter' onSelect={filterTable} />
       <button onClick={clearSortAndFilter} >Clear sorting and filtering</button>
