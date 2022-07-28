@@ -84,7 +84,7 @@ function App() {
       }
       {exportContent.length === 0 && csvContent.length === 0 && (
         <div>
-          <p>Add your Flex data export file to see your data visualised.</p>
+          <p>Add your Flex data file to see your data visualised.</p>
           <input 
             type="file" 
             id="input"

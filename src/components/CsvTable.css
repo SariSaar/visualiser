@@ -13,3 +13,13 @@ th, td {
 .modifySelect {
   padding: 2px;
 }
+
+.buttonContainer {
+  background-color: white;
+  width: 200px;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  left: 0;
+  top: 0;
+  padding: 5px;
+}

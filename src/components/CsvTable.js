@@ -1,8 +1,9 @@
 import Table from 'rc-table';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import '../components/CsvTable.css';
 import ModifySelect from './ModifySelect';
 import { sortByAttribute, filterByAttribute } from '../util/sort';
+import React from 'react';
 
 const extDataKeys = ['PublicData', 'ProtectedData', 'PrivateData', 'Metadata']
 
@@ -14,9 +15,17 @@ const getExtendedDataAttributes = (dataKey, content) => {
     }
   }
 
+  const boolParser = (_, value) => {
+    if (typeof value == 'boolean') {
+      return value.toString();
+    } else {
+      return value;
+    }
+  }
+
   const attr = content.reduce((acc, val) => {
     const extDataObject = val[dataKey];
-    const data = JSON.parse(extDataObject);
+    const data = JSON.parse(extDataObject, boolParser);
     const keys = data ? Object.keys(data) : [];
     const accKeys = acc.keys ?? [];
     return {
@@ -36,10 +45,16 @@ const getExtendedDataAttributes = (dataKey, content) => {
   }
 }
 
+const empty = '-';
+
 const CsvTable = (props) => {
   const { content, columns } = props;
 
   const [sortFilterData, updateSortFilterData] = useState([])
+  const sortInputRef = useRef();
+  const filterInputRef = useRef();
+  const [sortParam, updateSortParam] = useState(empty)
+  const [filterParam, updateFilterParam] = useState(empty)
 
   const extAttributes = extDataKeys.reduce((acc, key) => {
     return {
@@ -89,17 +104,40 @@ const CsvTable = (props) => {
   })
 
   const sortTable = (e) => {
-    const newData = sortByAttribute(data, e.target.value);
-    updateSortFilterData(newData);
+    const sort = e.target.value;
+    updateSortParam(sort);
+
+    console.log({ sort }, { filterParam })
+
+    if (sort === empty && filterParam !== empty) {
+      updateSortFilterData(filterByAttribute(data, filterParam))
+    } else if (sort === empty && filterParam === empty) {
+      clearSortAndFilter()
+    } else {  
+      updateSortFilterData(sortByAttribute(sortFilterData, sort))
+    }
   }
 
   const filterTable= (e) => {
-    const newData = filterByAttribute(data, e.target.value);
-    updateSortFilterData(newData);
+    const filter = e.target.value;
+    updateFilterParam(filter);
+
+    if (filter === empty && sortParam !== empty) {
+      updateSortFilterData(sortByAttribute(data, sortParam))
+    } else if (filter === empty && sortParam === empty) {
+      clearSortAndFilter();
+    } else {
+      updateSortFilterData(filterByAttribute(sortFilterData, filter));
+    }
   }
 
   const clearSortAndFilter = () => {
     updateSortFilterData(data);
+    updateSortParam(empty);
+    updateFilterParam(empty);
+    sortInputRef.current.value = empty;
+    filterInputRef.current.value = empty;
+;
   }
 
   useEffect(() => {
@@ -108,10 +146,12 @@ const CsvTable = (props) => {
 
   return (
     <div>
+      <div className="buttonContainer">
       Rows: {sortFilterData.length}
-      <ModifySelect options={cols} mode='Sort' onSelect={sortTable} />
-      <ModifySelect options={cols} mode='Filter' onSelect={filterTable} />
+        <ModifySelect options={cols} mode='Sort' passedRef={sortInputRef} onSelect={sortTable} />
+        <ModifySelect options={cols} mode='Filter' passedRef={filterInputRef} onSelect={filterTable} />
       <button onClick={clearSortAndFilter} >Clear sorting and filtering</button>
+      </div>
       <Table 
         columns={cols}
         data={sortFilterData}

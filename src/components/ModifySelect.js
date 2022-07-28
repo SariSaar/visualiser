@@ -1,11 +1,15 @@
 import '../components/CsvTable.css';
 
 const ModifySelect = (props) => {
-  const {options, mode, onSelect} = props;
+  const {options, mode, onSelect, passedRef} = props;
 
   return (
     <div className="modifySelect">
-      {mode} by: <select onChange={onSelect}>
+      {mode} by: 
+      <select
+        ref={passedRef}
+        onChange={onSelect}>
+          <option value='-'>--</option>
       {options.map(opt => (
         <option value={opt.dataIndex}>{opt.title}</option>))
       }
