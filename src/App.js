@@ -70,7 +70,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <h1>Flex data visualiser</h1>
+        <h1>Sharetribe data visualiser</h1>
       {isExport && exportContent.map(item => (
         <User
           key={item.id}
@@ -84,7 +84,7 @@ function App() {
       }
       {exportContent.length === 0 && csvContent.length === 0 && (
         <div>
-          <p>Add your Flex data file to see your data visualised.</p>
+          <p>Add your Sharetribe data file to see your data visualised.</p>
           <input 
             type="file" 
             id="input"
